@@ -1,0 +1,15 @@
+{
+  "domain": "vaultwarden",
+  "name": "Vaultwarden",
+  "codeowners": [
+    "@NiklasM-foss"
+  ],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/NiklasM-foss/ha-vaultwarden",
+  "integration_type": "service",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/NiklasM-foss/ha-vaultwarden/issues",
+  "requirements": [],
+  "version": "1.0.0"
+}

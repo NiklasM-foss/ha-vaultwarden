@@ -1,0 +1,24 @@
+{
+  "entity": {
+    "binary_sensor": {
+      "erreichbar": {
+        "default": "mdi:shield-lock",
+        "state": {
+          "off": "mdi:shield-lock-outline"
+        }
+      }
+    },
+    "sensor": {
+      "benutzer_gesamt": { "default": "mdi:account-group" },
+      "benutzer_aktiviert": { "default": "mdi:account-check" },
+      "benutzer_deaktiviert": { "default": "mdi:account-cancel" },
+      "benutzer_zwei_faktor": { "default": "mdi:two-factor-authentication" },
+      "benutzer_eingeladen": { "default": "mdi:account-clock" },
+      "organisationen": { "default": "mdi:office-building" },
+      "zuletzt_aktiv": { "default": "mdi:clock-outline" },
+      "version": { "default": "mdi:tag-outline" },
+      "neueste_version": { "default": "mdi:tag-arrow-up-outline" },
+      "server_zeit": { "default": "mdi:clock-check-outline" }
+    }
+  }
+}

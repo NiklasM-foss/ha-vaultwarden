@@ -1,0 +1,68 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vaultwarden",
+        "description": "Adresse der Vaultwarden-Instanz, zum Beispiel http://192.168.1.10 oder https://vault.example.com. Das Admin-Token ist optional: ohne Token gibt es nur Erreichbarkeit und installierte Version, mit Token zusätzlich Benutzer, Organisationen und den Versionsvergleich.",
+        "data": {
+          "url": "URL",
+          "admin_token": "Admin-Token (optional)",
+          "verify_ssl": "SSL-Zertifikat prüfen",
+          "name": "Name"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Vaultwarden Admin-Token",
+        "description": "Das Admin-Token für {url} wird nicht mehr akzeptiert. Bitte das aktuelle Token eintragen.",
+        "data": {
+          "admin_token": "Admin-Token"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Server nicht erreichbar.",
+      "invalid_auth": "Admin-Token wurde abgelehnt.",
+      "rate_limited": "Zu viele Anmeldeversuche, in ein paar Minuten erneut probieren.",
+      "admin_disabled": "Das Admin-Backend ist auf diesem Server nicht aktiviert (ADMIN_TOKEN ist nicht gesetzt).",
+      "unknown": "Unerwarteter Fehler, siehe Home-Assistant-Log."
+    },
+    "abort": {
+      "already_configured": "Diese Instanz ist bereits eingerichtet.",
+      "reauth_successful": "Admin-Token aktualisiert."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Optionen",
+        "data": {
+          "scan_interval_minutes": "Abfrageintervall (Minuten)"
+        },
+        "data_description": {
+          "scan_interval_minutes": "Der Versionsvergleich wird unabhängig davon höchstens stündlich geholt, weil der Server dafür GitHub und NTP abfragt."
+        }
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "erreichbar": { "name": "Erreichbar" }
+    },
+    "sensor": {
+      "benutzer_gesamt": { "name": "Benutzer" },
+      "benutzer_aktiviert": { "name": "Benutzer aktiviert" },
+      "benutzer_deaktiviert": { "name": "Benutzer deaktiviert" },
+      "benutzer_zwei_faktor": { "name": "Benutzer mit 2FA" },
+      "benutzer_eingeladen": { "name": "Benutzer eingeladen" },
+      "organisationen": { "name": "Organisationen" },
+      "zuletzt_aktiv": { "name": "Letzte Aktivität" },
+      "version": { "name": "Version" },
+      "neueste_version": { "name": "Neueste Version" },
+      "server_zeit": { "name": "Serverzeit" }
+    },
+    "update": {
+      "server": { "name": "Server" },
+      "web_vault": { "name": "Web-Vault" }
+    }
+  }
+}
