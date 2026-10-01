@@ -17,6 +17,15 @@
         "data": {
           "admin_token": "Admin-Token"
         }
+      },
+      "reconfigure": {
+        "title": "Vaultwarden neu konfigurieren",
+        "description": "Verbindungseinstellungen für {url} ändern. Bleibt das Admin-Token leer, wird das gespeicherte Token beibehalten.",
+        "data": {
+          "url": "URL",
+          "admin_token": "Neues Admin-Token (optional)",
+          "verify_ssl": "SSL-Zertifikat prüfen"
+        }
       }
     },
     "error": {
@@ -28,7 +37,8 @@
     },
     "abort": {
       "already_configured": "Diese Instanz ist bereits eingerichtet.",
-      "reauth_successful": "Admin-Token aktualisiert."
+      "reauth_successful": "Admin-Token aktualisiert.",
+      "reconfigure_successful": "Einstellungen aktualisiert."
     }
   },
   "options": {

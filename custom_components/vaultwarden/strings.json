@@ -17,6 +17,15 @@
         "data": {
           "admin_token": "Admin token"
         }
+      },
+      "reconfigure": {
+        "title": "Reconfigure Vaultwarden",
+        "description": "Change the connection settings for {url}. Leave the admin token empty to keep the stored token.",
+        "data": {
+          "url": "URL",
+          "admin_token": "New admin token (optional)",
+          "verify_ssl": "Verify SSL certificate"
+        }
       }
     },
     "error": {
@@ -28,7 +37,8 @@
     },
     "abort": {
       "already_configured": "This instance is already configured.",
-      "reauth_successful": "Admin token updated."
+      "reauth_successful": "Admin token updated.",
+      "reconfigure_successful": "Settings updated."
     }
   },
   "options": {

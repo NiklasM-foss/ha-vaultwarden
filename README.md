@@ -56,6 +56,21 @@ kopieren und Home Assistant neu starten.
 Unter *Konfigurieren* lässt sich später das Abfrageintervall ändern (Standard 5 Minuten).
 Wird das Token ungültig, fragt Home Assistant über den normalen Reauth-Dialog nach einem neuen.
 
+### Einstellungen später ändern
+
+Zieht die Instanz um oder ändert sich das Token, muss die Integration nicht neu
+eingerichtet werden: *Einstellungen → Geräte & Dienste → Vaultwarden → ⋮ → Neu konfigurieren*.
+
+| Feld | Verhalten |
+| --- | --- |
+| URL | Mit der aktuellen Adresse vorausgefüllt. Ist die neue URL schon als eigener Eintrag eingerichtet, bricht der Dialog ab. |
+| Neues Admin-Token | Bleibt aus Sicherheitsgründen leer. Leer lassen behält das gespeicherte Token, ein neuer Wert ersetzt es. |
+| SSL-Zertifikat prüfen | Mit der aktuellen Einstellung vorausgefüllt. |
+
+Die Verbindung wird vor dem Speichern genauso geprüft wie bei der Einrichtung,
+danach lädt die Integration neu. Entities und ihre IDs bleiben erhalten.
+Benötigt Home Assistant 2024.11 oder neuer.
+
 ### Admin-Token
 
 Ist `ADMIN_TOKEN` nicht gesetzt, ist das Admin-Backend deaktiviert und die

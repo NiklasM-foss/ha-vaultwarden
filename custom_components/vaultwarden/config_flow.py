@@ -4,7 +4,8 @@ Config-Flow der Vaultwarden-Integration.
 Ein Schritt: URL, optional Admin-Token, SSL-Prüfung. Beim Absenden wird die
 Instanz einmal wirklich abgefragt, damit Tippfehler und ein falsches Token
 sofort auffallen. Läuft das Token später ab oder wird es geändert, meldet der
-Coordinator das und Home Assistant startet den Reauth-Schritt.
+Coordinator das und Home Assistant startet den Reauth-Schritt. Über
+„Neu konfigurieren" lassen sich URL, Token und SSL-Prüfung nachträglich ändern.
 """
 
 from __future__ import annotations
@@ -178,6 +179,61 @@ class VaultwardenConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="reauth_confirm",
             data_schema=vol.Schema({vol.Optional(CONF_ADMIN_TOKEN, default=""): str}),
+            description_placeholders={"url": entry.data[CONF_URL]},
+            errors=errors,
+        )
+
+
+    async def async_step_reconfigure(
+        self, user_input: dict[str, Any] | None = None
+    ) -> ConfigFlowResult:
+        """URL, Admin-Token und SSL-Prüfung eines bestehenden Eintrags ändern."""
+        errors: dict[str, str] = {}
+        entry = self._get_reconfigure_entry()
+
+        if user_input is not None:
+            url = _normalize_url(user_input[CONF_URL])
+            # Leeres Feld heißt: gespeichertes Token behalten. Das Token wird
+            # bewusst nicht vorausgefüllt, damit es nicht im Formular steht.
+            token = (user_input.get(CONF_ADMIN_TOKEN) or "").strip() or entry.data.get(
+                CONF_ADMIN_TOKEN
+            )
+            verify_ssl = user_input.get(CONF_VERIFY_SSL, True)
+
+            # Die unique_id ist die URL. Gehört die neue URL schon zu einem
+            # anderen Eintrag, abbrechen statt zwei Einträge gleich zu benennen.
+            if any(
+                other.unique_id == url and other.entry_id != entry.entry_id
+                for other in self._async_current_entries(include_ignore=False)
+            ):
+                return self.async_abort(reason="already_configured")
+
+            error = await self._async_validate(url, token, verify_ssl)
+            if error:
+                errors["base"] = error
+            else:
+                return self.async_update_reload_and_abort(
+                    entry,
+                    unique_id=url,
+                    data_updates={
+                        CONF_URL: url,
+                        CONF_ADMIN_TOKEN: token,
+                        CONF_VERIFY_SSL: verify_ssl,
+                    },
+                )
+
+        current = {**entry.data, **(user_input or {})}
+        return self.async_show_form(
+            step_id="reconfigure",
+            data_schema=vol.Schema(
+                {
+                    vol.Required(CONF_URL, default=current.get(CONF_URL, "")): str,
+                    vol.Optional(CONF_ADMIN_TOKEN, default=""): str,
+                    vol.Optional(
+                        CONF_VERIFY_SSL, default=current.get(CONF_VERIFY_SSL, True)
+                    ): bool,
+                }
+            ),
             description_placeholders={"url": entry.data[CONF_URL]},
             errors=errors,
         )
